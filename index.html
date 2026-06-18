@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Планы недели</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="app-header">
+        <div class="brand-block">
+          <div class="logo" aria-hidden="true">П</div>
+          <div>
+          <p class="eyebrow">Планы недели</p>
+          <h1>Планы недели</h1>
+          <p class="header-copy">Задачи распределяются по дням, энергии, категории и жизненному контексту.</p>
+          </div>
+        </div>
+        <div class="header-actions">
+          <div class="energy-summary" id="energySummary">Энергия недели: 0</div>
+          <button class="primary-button" id="newTaskButton" type="button">+ Новая задача</button>
+        </div>
+
+      <section class="filters" aria-label="Фильтры задач">
+        <input id="searchInput" class="field search-field" type="search" placeholder="Поиск задач" />
+        <input id="energyFilter" class="field" type="number" min="1" max="100" placeholder="Энергия 1-100" />
+        <select id="difficultyFilter" class="field">
+          <option value="all">Любая сложность</option>
+          <option value="easy">Легкая</option>
+          <option value="medium">Средняя</option>
+          <option value="hard">Сложная</option>
+        </select>
+        <select id="categoryFilter" class="field">
+          <option value="all">Все категории</option>
+          <option value="personal">Личное</option>
+          <option value="home">Дом</option>
+          <option value="work">Работа</option>
+          <option value="study">Учеба</option>
+          <option value="hobby">Хобби</option>
+        </select>
+        <input id="contextFilter" class="field" type="text" placeholder="Тег контекста" />
+        <label class="checkbox-filter">
+          <input id="archivedFilter" type="checkbox" />
+          Архив
+        </label>
+        <label class="checkbox-filter">
+          <input id="completedFilter" type="checkbox" />
+          Выполнено
+        </label>
+      </section>
+      </header>
+
+      <section id="board" class="board" aria-label="Доска задач"></section>
+    </main>
+
+    <button class="fab-button" id="fabButton" type="button" aria-label="Добавить задачу">+</button>
+
+    <dialog id="taskDialog" class="task-dialog">
+      <form id="taskForm" class="task-form" method="dialog">
+        <div class="dialog-header">
+          <h2 id="dialogTitle">Новая задача</h2>
+          <button class="icon-button" id="closeDialogButton" type="button" aria-label="Закрыть">×</button>
+        </div>
+
+        <input id="taskId" type="hidden" />
+
+        <label>
+          Название
+          <input id="titleInput" class="field" type="text" minlength="2" maxlength="90" required />
+        </label>
+
+        <label>
+          Заметки
+          <textarea id="descriptionInput" class="field" rows="4" maxlength="1000"></textarea>
+        </label>
+
+        <div class="form-grid">
+          <label>
+            День
+            <select id="dayInput" class="field" required></select>
+          </label>
+
+          <label>
+            Сложность
+            <div class="segmented" role="radiogroup" aria-label="Сложность">
+              <label><input type="radio" name="difficultyInput" value="easy" checked /> Легкая</label>
+              <label><input type="radio" name="difficultyInput" value="medium" /> Средняя</label>
+              <label><input type="radio" name="difficultyInput" value="hard" /> Сложная</label>
+            </div>
+          </label>
+
+          <label>
+            Категория
+            <select id="categoryInput" class="field" required>
+              <option value="personal">Личное</option>
+              <option value="home">Дом</option>
+              <option value="work">Работа</option>
+              <option value="study">Учеба</option>
+              <option value="hobby">Хобби</option>
+            </select>
+          </label>
+
+          <label>
+            Энергия
+            <div class="energy-field">
+              <input id="energyInput" class="field" type="range" min="1" max="100" step="1" value="50" required />
+              <span id="energyValue">50</span>
+            </div>
+          </label>
+
+          <label>
+            Контекст
+            <input id="contextInput" class="field" type="text" maxlength="120" placeholder="дом, звонки, фокус" />
+          </label>
+        </div>
+        <div id="contextPreview" class="context-preview" aria-live="polite"></div>
+
+        <div class="state-row">
+          <label><input id="completedInput" type="checkbox" /> Выполнено</label>
+          <label><input id="archivedInput" type="checkbox" /> В архиве</label>
+        </div>
+
+        <div class="dialog-actions">
+          <button class="danger-button hidden" id="deleteTaskButton" type="button">Удалить</button>
+          <span></span>
+          <button class="secondary-button" id="cancelButton" type="button">Отмена</button>
+          <button class="primary-button" type="submit">Сохранить</button>
+        </div>
+      </form>
+    </dialog>
+
+    <div id="toast" class="toast" role="status" aria-live="polite">
+      <span id="toastMessage"></span>
+      <button id="toastRetry" type="button">Повторить</button>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
