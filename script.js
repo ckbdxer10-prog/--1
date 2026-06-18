@@ -52,6 +52,18 @@ const ENERGY_STATUS = {
   overload: "Нужна пауза"
 };
 const LEGACY_SEED_IDS = new Set(["seed-1", "seed-2", "seed-3"]);
+const LEGACY_SEED_TEXTS = new Set([
+  "shape weekly priorities",
+  "invoice review",
+  "deep design pass",
+  "определить приоритеты",
+  "проверить счета",
+  "глубокий дизайн-проход",
+  "глубокий дизайн",
+  "выбрать три главных",
+  "защитить тихий",
+  "приоритеты недели"
+]);
 const DAY_MIGRATION = {
   Monday: "Понедельник",
   Tuesday: "Вторник",
@@ -131,11 +143,27 @@ function loadTasks() {
   try {
     const saved = localStorage.getItem(STORAGE_KEY);
     const source = saved ? JSON.parse(saved) : seedTasks;
-    return source.filter((task) => !LEGACY_SEED_IDS.has(task.id)).map(migrateTask);
+    return source.filter((task) => !isLegacySeedTask(task)).map(migrateTask);
   } catch (error) {
     showDeferredToast("Поврежденные локальные данные заменены демо-задачами.");
     return seedTasks.map(migrateTask);
   }
+}
+
+function isLegacySeedTask(task) {
+  if (!task) return false;
+  if (LEGACY_SEED_IDS.has(task.id)) return true;
+
+  const searchableText = [
+    task.title,
+    task.description,
+    ...(Array.isArray(task.context) ? task.context : [])
+  ]
+    .filter(Boolean)
+    .join(" ")
+    .toLowerCase();
+
+  return [...LEGACY_SEED_TEXTS].some((text) => searchableText.includes(text));
 }
 
 function loadOfflineQueue() {
