@@ -79,53 +79,7 @@ const SEED_TRANSLATIONS = {
   }
 };
 
-const seedTasks = [
-  {
-    id: "seed-1",
-    title: "Определить приоритеты недели",
-    description: "Выбрать три главных опоры недели и оставить место для отдыха.",
-    day: "Понедельник",
-    difficulty: "medium",
-    category: "personal",
-    context: ["планирование", "неделя"],
-    energy: 50,
-    completed: false,
-    archived: false,
-    order: 0,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: "seed-2",
-    title: "Проверить счета",
-    description: "",
-    day: "Вторник",
-    difficulty: "easy",
-    category: "work",
-    context: ["финансы"],
-    energy: 25,
-    completed: false,
-    archived: false,
-    order: 0,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: "seed-3",
-    title: "Глубокий дизайн-проход",
-    description: "Защитить тихий блок времени и убрать уведомления.",
-    day: "Четверг",
-    difficulty: "hard",
-    category: "work",
-    context: ["дизайн", "фокус"],
-    energy: 80,
-    completed: false,
-    archived: false,
-    order: 0,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  }
-];
+const seedTasks = [];
 
 let tasks = loadTasks();
 let searchQuery = "";
