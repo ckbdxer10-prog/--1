@@ -51,6 +51,7 @@ const ENERGY_STATUS = {
   warning: "Много нагрузки",
   overload: "Нужна пауза"
 };
+const LEGACY_SEED_IDS = new Set(["seed-1", "seed-2", "seed-3"]);
 const DAY_MIGRATION = {
   Monday: "Понедельник",
   Tuesday: "Вторник",
@@ -61,23 +62,7 @@ const DAY_MIGRATION = {
   Sunday: "Воскресенье"
 };
 
-const SEED_TRANSLATIONS = {
-  "seed-1": {
-    title: "Определить приоритеты недели",
-    description: "Выбрать три главных опоры недели и оставить место для отдыха.",
-    context: ["планирование", "неделя"]
-  },
-  "seed-2": {
-    title: "Проверить счета",
-    description: "",
-    context: ["финансы"]
-  },
-  "seed-3": {
-    title: "Глубокий дизайн-проход",
-    description: "Защитить тихий блок времени и убрать уведомления.",
-    context: ["дизайн", "фокус"]
-  }
-};
+const SEED_TRANSLATIONS = {};
 
 const seedTasks = [];
 
@@ -146,7 +131,7 @@ function loadTasks() {
   try {
     const saved = localStorage.getItem(STORAGE_KEY);
     const source = saved ? JSON.parse(saved) : seedTasks;
-    return source.map(migrateTask);
+    return source.filter((task) => !LEGACY_SEED_IDS.has(task.id)).map(migrateTask);
   } catch (error) {
     showDeferredToast("Поврежденные локальные данные заменены демо-задачами.");
     return seedTasks.map(migrateTask);
